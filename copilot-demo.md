@@ -56,39 +56,38 @@ The agent will operate in a professional tone and be used by development teams i
 
 ## ⚙️ 3. Create Power Automate Flow: Create GitHub Issue
 
+Click **Flows** on the left sidebar, then **+ New agent flow** for each use case. After creating each flow you need to Save a draft, then rename it in Overview tab (they got "Untitled" name by default) and publish it.
+
 ### ⚙️ A. Get Pull Requests from GitHub
 
 * Trigger: "When an action is called from a Copilot"
-* Inputs: `owner`, `repo`
-* Action: Use **GitHub connector**:
-
-  * Action: **List pull requests**
-  * Filter by state (e.g., open)
-* Output: Return a formatted summary string of recent PRs
+* Action: **Get all Pull Requests of A Repository**
+   * Repository Owner: **patrikulus**
+   * Repository Name: **copilot-studio-workshop**
+* Output: **Respond to the agent**
+   * Parameters:
+      - name: result
+      - value: **Body** variable (use / > Insert dynamic content)
 
 ### ⚙️ B. Create GitHub Issue
 
 * Trigger: "When an action is called from a Copilot"
-* Inputs: `title`, `body`
-* Action: Use **GitHub connector**:
-
-  * Action: **Create issue** in a specific repo
-  * Authenticate using your fine-grained token
-* Output: confirmation string (e.g., "Issue created: #42")
-
----
+* Action: **Create an issue**
+   * Repository Owner: **patrikulus**
+   * Repository Name: **copilot-studio-workshop**
+* Output: **Respond to the agent**
+   * Parameters:
+      - name: result
+      - value: "Issue created" (or any other confirmation text)
 
 ---
 
 ## 🧩 4. Add Flow to Copilot Agent
 
-1. In Copilot Studio, create a topic: `"Create a GitHub issue"`.
-2. Add trigger phrases: “open issue”, “report bug”, etc.
-3. Insert **Call an action** node.
-4. Select your `CreateGitHubIssue` flow.
-5. Map input fields from conversation.
-6. Add a final message node:
-   - “✅ Your GitHub issue has been created!”
+1. In Copilot Studio, go to **Agents** > **DevOps Helper Bot** 
+2. Switch to **Actions** tab and **+ Add an action**
+3. Your flows should be listed, select then (one by one)
+4. Disable the previously created Topic to avoid issue with getting pull requests, (both Topic and Action share the same name)
 
 ---
 
