@@ -82,7 +82,7 @@ Click **Flows** on the left sidebar, then **+ New agent flow** for each use case
 
 ---
 
-## 🧩 4. Add Flow to Copilot Agent
+## 🧩 4. Add Flows to Copilot Agent
 
 1. In Copilot Studio, go to **Agents** > **DevOps Helper Bot** 
 2. Switch to **Actions** tab and **+ Add an action**
