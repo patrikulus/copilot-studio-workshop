@@ -9,9 +9,16 @@ In this step-by-step guide, you’ll learn how to create a custom Copilot agent 
 ## 🧱 1. Create a Copilot Agent
 
 1. Navigate to [Copilot Studio](https://copilotstudio.microsoft.com/).
-2. Click **“Create a copilot”**.
-3. Enter a name, e.g., `DevOps Helper Bot`.
-4. Choose the environment you created earlier (e.g., `CopilotWorkshop`).
+2. Click **Create** on the left menu bar, then **+ New Agent**
+3. Enter a description for AI to create the agent. e.g:
+```
+Create a Copilot agent called "DevOps Helper Bot" that assists developers with GitHub repository tasks. It should be able to:
+- List recent pull requests and issues from a specific repository.
+- Filter pull requests where the user is a reviewer.
+- Create a new GitHub issue using a Power Automate flow.
+The agent will operate in a professional tone and be used by development teams inside Microsoft Teams. It should include example phrases like "Show my PRs", "List open issues", and "Create a new issue".
+```
+4. 2. Click **Create**
 5. Set up:
    - **Greeting Topic**: e.g., “Hi! I can help you with GitHub issues and PRs.”
    - **Fallback Topic**: Default or add custom handling.
