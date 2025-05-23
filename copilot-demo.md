@@ -54,7 +54,7 @@ The agent will operate in a professional tone and be used by development teams i
 
 ---
 
-## ⚙️ 3. Create Power Automate Flow: Create GitHub Issue
+## ⚙️ 3. Create Power Automate Flows
 
 Click **Flows** on the left sidebar, then **+ New agent flow** for each use case. After creating each flow you need to Save a draft, then rename it in Overview tab (they got "Untitled" name by default) and publish it.
 
