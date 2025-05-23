@@ -14,12 +14,11 @@ In this step-by-step guide, you’ll learn how to create a custom Copilot agent 
 ```
 Create a Copilot agent called "DevOps Helper Bot" that assists developers with GitHub repository tasks. It should be able to:
 - List recent pull requests and issues from a specific repository.
-- Filter pull requests where the user is a reviewer.
 - Create a new GitHub issue using a Power Automate flow.
 The agent will operate in a professional tone and be used by development teams inside Microsoft Teams. It should include example phrases like "Show my PRs", "List open issues", and "Create a new issue".
 ```
-4. 2. Click **Create**
-5. Set up:
+4. Click **Create**
+5. Explore and modify (if you want):
    - **Greeting Topic**: e.g., “Hi! I can help you with GitHub issues and PRs.”
    - **Fallback Topic**: Default or add custom handling.
 
@@ -27,43 +26,57 @@ The agent will operate in a professional tone and be used by development teams i
 
 ## 🔗 2. Connect to GitHub (via Custom Action)
 
-### Option A: Use GitHub Plugin (if available)
-1. Go to **Plugins** tab and search for **GitHub**.
-2. If enabled, configure it and use actions like `GetIssues`, `ListPRs`.
+### Create a GitHub Fine-Grained Personal Access Token (PAT)
 
-### Option B: Use Custom Action with GitHub REST API
+1. Visit [https://github.com/settings/personal-access-tokens](https://github.com/settings/personal-access-tokens)
+2. Click **Generate new token (fine-grained)**
+3. Configure the following:
+
+   * **Repository access**: Select **Only select repositories** and choose `copilot-studio-workshop`
+   * **Permissions**: Grant `Contents: Read and write` and `Pull requests: Read and write`
+4. Generate and copy the token. You will not see it again.
+
+### Use Custom Action with GitHub REST API
 1. Go to **Topics** > **Add a topic**: 
-   - Name your topic: `"Show my pull requests"`.
-   - Create a topic to...: `"Let user list all GitHub pull requests where he is assigned"`.
+   - Name your topic: `"Get pull requests"`.
+   - Create a topic to...: `"Let user list latest GitHub pull requests"`.
 2. Click **Create**
-2. Add a **Call an action** node > Choose **+ Add a new action**.
-3. Select **HTTP request**:
+3. Add a **Call an action** node > Choose **+ Add a new action**.
+4. Select **HTTP request**:
    - **Method**: `GET`
-   - **URL**: `https://api.github.com/repos/<owner>/<repo>/pulls?state=open`
-   - **Authentication**: Personal Access Token (scoped for `repo`)
-4. Parse and return pull request titles in response.
+   - **URL**: `https://api.github.com/repos/patrikulus/<repo>/pulls?state=open`
+   - **Headers**:
+     - User-Agent: "Mozilla/5.0",
+     - Accept: "application/vnd.github+json",
+     - Authorization: "Bearer <PAT>"
+
+5. Set output variable for the response.
 
 ---
 
 ## ⚙️ 3. Create Power Automate Flow: Create GitHub Issue
 
-1. Open [Power Automate](https://make.powerautomate.com/).
-2. Click **Create** > **Instant cloud flow** > Name: `CreateGitHubIssue`.
-3. Trigger: **When an action is called from a Copilot**.
-4. Add inputs:
-   - `title` (Text)
-   - `body` (Text)
-5. Add **HTTP** or **GitHub Connector** action:
-   - POST to `https://api.github.com/repos/<owner>/<repo>/issues`
-   - Headers: `Authorization: Bearer <PAT>`
-   - Body:
-     ```json
-     {
-       "title": "@{triggerBody()['title']}",
-       "body": "@{triggerBody()['body']}"
-     }
-     ```
-6. Return confirmation message as output.
+### ⚙️ A. Get Pull Requests from GitHub
+
+* Trigger: "When an action is called from a Copilot"
+* Inputs: `owner`, `repo`
+* Action: Use **GitHub connector**:
+
+  * Action: **List pull requests**
+  * Filter by state (e.g., open)
+* Output: Return a formatted summary string of recent PRs
+
+### ⚙️ B. Create GitHub Issue
+
+* Trigger: "When an action is called from a Copilot"
+* Inputs: `title`, `body`
+* Action: Use **GitHub connector**:
+
+  * Action: **Create issue** in a specific repo
+  * Authenticate using your fine-grained token
+* Output: confirmation string (e.g., "Issue created: #42")
+
+---
 
 ---
 
@@ -92,3 +105,6 @@ The agent will operate in a professional tone and be used by development teams i
 🎉 Congrats! You’ve created a custom DevOps assistant powered by Copilot Studio.
 
 Need help? Open an issue in this repo or ask during the session!
+
+
+
