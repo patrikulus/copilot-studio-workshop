@@ -31,3 +31,14 @@ Once your environment is created:
 3. In the top right corner, select the newly created environment (e.g., `CopilotWorkshop`).
 4. You are now ready to create and test your own custom copilots!
 
+---
+
+## ✅ Next Steps
+
+- Follow the [Demo Script](./copilot-demo.md) to build your first Copilot Agent
+- Explore [Power Automate](https://make.powerautomate.com/) to trigger actions from your agent
+- Review [GitHub API Docs](https://docs.github.com/en/rest) for custom integrations
+
+---
+
+🛠 *Need help? Feel free to open an issue in this repo or ask during the workshop.*
